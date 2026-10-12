@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Health Unit 4: Nutrition & Wellness — Interactive Practice Test</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Plus Jakarta Sans', sans-serif; }
+    h1, h2, h3, h4, .font-heading { font-family: 'Outfit', sans-serif; }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen antialiased selection:bg-emerald-500 selection:text-white pb-16">
+
+  <!-- TOP APP HEADER -->
+  <header class="border-b border-slate-800 bg-slate-900/90 backdrop-blur-md sticky top-0 z-50">
+    <div class="max-w-5xl mx-auto px-4 py-3.5 flex flex-wrap items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <span class="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-500 to-teal-400 flex items-center justify-center font-black text-slate-950 text-xl shadow-md shadow-emerald-500/20">
+          🥗
+        </span>
+        <div>
+          <h1 class="text-base font-bold tracking-wide text-white">Health (Course 60105s)</h1>
+          <p class="text-xs text-emerald-400 font-medium">Mrs. Scott • Unit 4: Nutrition Vocabulary (U4F1) &amp; Summative</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-3 text-xs">
+        <span class="px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 font-semibold">
+          Due: Fri, Oct 16 (11:59 PM)
+        </span>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO SECTION -->
+  <section class="border-b border-slate-800 bg-gradient-to-b from-slate-900 via-slate-950 to-slate-950 py-10 px-4">
+    <div class="max-w-3xl mx-auto text-center space-y-4">
+      <span class="inline-block px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs font-bold tracking-widest uppercase">
+        Live Self-Grading Quiz &amp; Flashcards
+      </span>
+      <h2 class="text-3xl md:text-5xl font-black text-white tracking-tight leading-tight font-heading">
+        Unit 4 Nutrition <span class="bg-gradient-to-r from-emerald-400 to-teal-300 bg-clip-text text-transparent">Mastery Test</span>
+      </h2>
+      <p class="text-slate-300 text-sm md:text-base leading-relaxed">
+        Test yourself on all essential 9th-grade nutrition concepts before submitting <strong class="text-emerald-400">U4F1</strong> on Friday and taking the <strong class="text-emerald-400">Unit 4 Summative on Oct 20</strong>.
+      </p>
+
+      <!-- SCOREBOARD CARD -->
+      <div class="p-4 rounded-2xl bg-slate-900/90 border border-slate-800 max-w-md mx-auto grid grid-cols-3 gap-2 text-center shadow-xl">
+        <div class="p-2 rounded-xl bg-slate-950/80 border border-slate-800/80">
+          <div class="text-[10px] text-slate-400 uppercase font-bold">Answered</div>
+          <div id="stat-answered" class="text-xl font-black text-white">0 / 20</div>
+        </div>
+        <div class="p-2 rounded-xl bg-slate-950/80 border border-slate-800/80">
+          <div class="text-[10px] text-slate-400 uppercase font-bold">Correct</div>
+          <div id="stat-score" class="text-xl font-black text-emerald-400">0</div>
+        </div>
+        <div class="p-2 rounded-xl bg-slate-950/80 border border-slate-800/80">
+          <div class="text-[10px] text-slate-400 uppercase font-bold">Percentage</div>
+          <div id="stat-percent" class="text-xl font-black text-teal-300">0%</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MODE SELECTOR TABS -->
+  <div class="max-w-4xl mx-auto px-4 mt-8">
+    <div class="flex items-center justify-center gap-2 p-1.5 bg-slate-900/90 border border-slate-800 rounded-2xl max-w-sm mx-auto">
+      <button id="tab-btn-quiz" onclick="switchMode('quiz')" class="flex-1 py-2 text-xs font-bold rounded-xl transition bg-emerald-500 text-slate-950 shadow-md">
+        Interactive Test
+      </button>
+      <button id="tab-btn-flashcards" onclick="switchMode('flashcards')" class="flex-1 py-2 text-xs font-bold rounded-xl transition text-slate-400 hover:text-white">
+        Flashcards (20)
+      </button>
+      <button id="tab-btn-glossary" onclick="switchMode('glossary')" class="flex-1 py-2 text-xs font-bold rounded-xl transition text-slate-400 hover:text-white">
+        Word Bank
+      </button>
+    </div>
+  </div>
+
+  <!-- CONTAINER -->
+  <main class="max-w-4xl mx-auto px-4 py-8">
+
+    <!-- VIEW 1: QUIZ -->
+    <div id="view-quiz" class="space-y-6">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+        <h3 class="text-base font-bold text-white font-heading">20 Practice Questions (Immediate Feedback)</h3>
+        <button onclick="resetQuiz()" class="text-xs text-slate-400 hover:text-emerald-400 transition font-semibold">
+          ↺ Reset Test
+        </button>
+      </div>
+
+      <div id="quiz-container" class="space-y-4">
+        <!-- Rendered by JavaScript -->
+      </div>
+    </div>
+
+    <!-- VIEW 2: FLASHCARDS -->
+    <div id="view-flashcards" class="hidden space-y-6">
+      <div class="text-center space-y-2">
+        <h3 class="text-lg font-bold text-white font-heading">Interactive Flashcard Deck</h3>
+        <p class="text-xs text-slate-400">Click anywhere on the card to flip between term and definition.</p>
+      </div>
+
+      <div class="max-w-md mx-auto">
+        <div id="flashcard" onclick="flipCard()" class="min-h-[220px] p-8 rounded-3xl bg-gradient-to-br from-slate-900 to-slate-950 border border-emerald-500/30 hover:border-emerald-500/60 shadow-2xl flex flex-col items-center justify-center text-center cursor-pointer transition transform active:scale-95 duration-200">
+          <span id="fc-badge" class="text-[10px] font-bold uppercase tracking-widest text-emerald-400 mb-3 bg-emerald-500/10 px-2.5 py-1 rounded-full border border-emerald-500/20">Term (Card 1 of 20)</span>
+          <h4 id="fc-text" class="text-2xl font-black text-white font-heading leading-snug">Complex Carbohydrates</h4>
+          <span class="text-[11px] text-slate-500 mt-4">Tap to reveal definition ↻</span>
+        </div>
+
+        <div class="flex items-center justify-between gap-4 mt-6">
+          <button onclick="prevCard()" class="flex-1 py-2.5 px-4 rounded-xl bg-slate-900 border border-slate-800 hover:border-slate-700 text-xs font-bold text-white transition">
+            ← Previous
+          </button>
+          <span id="fc-counter" class="text-xs font-mono text-slate-400">1 / 20</span>
+          <button onclick="nextCard()" class="flex-1 py-2.5 px-4 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-xs font-bold text-slate-950 transition shadow-lg shadow-emerald-500/20">
+            Next →
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- VIEW 3: GLOSSARY / WORD BANK -->
+    <div id="view-glossary" class="hidden space-y-4">
+      <div class="border-b border-slate-800 pb-3 flex items-center justify-between">
+        <h3 class="text-base font-bold text-white font-heading">Complete Unit 4 Vocabulary Word Bank</h3>
+        <span class="text-xs text-emerald-400 font-mono">20 Key Terms</span>
+      </div>
+      <div id="glossary-list" class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+        <!-- Rendered by JavaScript -->
+      </div>
+    </div>
+
+  </main>
+
+  <script>
+    const vocabData = [
+      {
+        id: 1,
+        term: "Nutrient",
+        def: "Chemical substances found in foods that your body needs to grow, repair tissues, and supply energy for daily life.",
+        options: [
+          "Chemical substances found in foods that your body needs to grow, repair tissues, and supply energy.",
+          "Indigestible plant fiber that only regulates bowel movements.",
+          "A unit of measurement calculating heat produced by physical exercise.",
+          "Artificial chemical preservatives added to packaged foods to extend shelf life."
+        ],
+        correct: 0,
+        category: "Basics"
+      },
+      {
+        id: 2,
+        term: "Calorie",
+        def: "A unit of measurement for the amount of energy released when nutrients are broken down and burned by the body.",
+        options: [
+          "The amount of sugar dissolved in a serving of liquid beverage.",
+          "A unit of energy measuring the fuel food provides to the body when metabolized.",
+          "The exact physical weight of fat cells stored under the skin.",
+          "A hormone produced by the pancreas to regulate blood glucose levels."
+        ],
+        correct: 1,
+        category: "Basics"
+      },
+      {
+        id: 3,
+        term: "Metabolism",
+        def: "The chemical processes by which the body breaks down food and converts nutrients into energy.",
+        options: [
+          "The chemical process where your body converts food and drinks into usable energy.",
+          "The muscular contractions of the esophagus pushing food down into the stomach.",
+          "The process of filtering toxic waste from the blood through the kidneys.",
+          "The involuntary retention of water caused by excessive sodium intake."
+        ],
+        correct: 0,
+        category: "Basics"
+      },
+      {
+        id: 4,
+        term: "Basal Metabolic Rate (BMR)",
+        def: "The rate at which your body burns calories at complete rest just to maintain vital life functions (breathing, heart beating, organ function).",
+        options: [
+          "The total number of calories burned during an intense 60-minute athletic workout.",
+          "The rate at which the body burns calories at complete rest to sustain vital life functions.",
+          "The speed at which stomach enzymes digest high-fat meals.",
+          "The percentage of daily calories derived from refined dietary sugars."
+        ],
+        correct: 1,
+        category: "Basics"
+      },
+      {
+        id: 5,
+        term: "Simple Carbohydrates",
+        def: "Sugars (like glucose and fructose) that are digested and absorbed rapidly, providing a quick but short-lived spike in energy.",
+        options: [
+          "Long chains of starches that take several hours to break down into glucose.",
+          "Quick-digesting sugars (such as glucose and fructose) that provide rapid, short-term energy.",
+          "Insoluble plant fibers that pass through the digestive tract undigested.",
+          "Dietary fats that solidify when kept at room temperature."
+        ],
+        correct: 1,
+        category: "Carbs"
+      },
+      {
+        id: 6,
+        term: "Complex Carbohydrates",
+        def: "Starches composed of long chains of sugar molecules that take longer to break down, providing sustained, long-lasting energy (e.g., whole grains, oats, brown rice).",
+        options: [
+          "Starches made of long sugar chains that break down slowly, providing sustained, steady energy.",
+          "Refined table sugars added to sodas and candy that cause rapid blood sugar crashes.",
+          "Protein structures synthesized from animal meat and dairy products.",
+          "Liquid vegetable oils that remain fluid at refrigerator temperatures."
+        ],
+        correct: 0,
+        category: "Carbs"
+      },
+      {
+        id: 7,
+        term: "Dietary Fiber",
+        def: "A complex carbohydrate found in plant foods that the body cannot digest; it promotes digestive health, regulates bowel movements, and lowers cholesterol.",
+        options: [
+          "An animal protein that repairs torn muscle fibers after resistance training.",
+          "A non-digestible plant carbohydrate that cleanses the digestive tract and stabilizes blood sugar.",
+          "A type of mineral needed to form strong red blood cell hemoglobin.",
+          "A toxic byproduct produced when the liver metabolizes excess alcohol."
+        ],
+        correct: 1,
+        category: "Carbs"
+      },
+      {
+        id: 8,
+        term: "Complete Protein",
+        def: "A protein source containing all 9 essential amino acids that the human body cannot produce on its own (found in meat, poultry, fish, eggs, dairy, and soy).",
+        options: [
+          "A protein source containing all 9 essential amino acids that your body cannot manufacture.",
+          "Any plant protein like beans or rice that lacks at least one essential amino acid.",
+          "A manufactured powder supplement designed for professional bodybuilders.",
+          "An enzyme produced by the salivary glands to dissolve bread starches."
+        ],
+        correct: 0,
+        category: "Proteins"
+      },
+      {
+        id: 9,
+        term: "Incomplete Protein",
+        def: "A protein source lacking one or more of the 9 essential amino acids; typically from plant sources (beans, nuts, grains) that can be combined to form complete proteins.",
+        options: [
+          "Damaged protein molecules that have been denatured by stomach acid.",
+          "A protein source from plant foods (like grains, beans, or nuts) lacking one or more essential amino acids.",
+          "A protein that has been completely converted into body fat for long-term storage.",
+          "A non-essential amino acid manufactured internally by healthy liver tissue."
+        ],
+        correct: 1,
+        category: "Proteins"
+      },
+      {
+        id: 10,
+        term: "Amino Acids",
+        def: "The 20 individual chemical building blocks that link together in chains to create proteins; 9 are 'essential' (must come from diet).",
+        options: [
+          "The microscopic chemical building blocks that link together to build and repair body proteins.",
+          "Small sugar rings that link together to create dietary starch and cellulose.",
+          "Fat droplets that transport cholesterol through the arterial bloodstream.",
+          "Organic vitamins that dissolve exclusively in liquid body fat."
+        ],
+        correct: 0,
+        category: "Proteins"
+      },
+      {
+        id: 11,
+        term: "Saturated Fat",
+        def: "Dietary fats typically solid at room temperature, found predominantly in animal products (butter, beef fat, cheese); excessive intake raises LDL cholesterol.",
+        options: [
+          "Liquid vegetable oils like olive oil and avocado oil that lower heart disease risks.",
+          "Fats that are usually solid at room temperature (found in butter and meats) that raise LDL cholesterol when consumed in excess.",
+          "Healthy omega-3 fatty acids found abundantly in wild salmon and flaxseeds.",
+          "Zero-calorie fats synthesized artificially in food chemistry laboratories."
+        ],
+        correct: 1,
+        category: "Fats"
+      },
+      {
+        id: 12,
+        term: "Unsaturated Fat",
+        def: "Heart-healthy fats typically liquid at room temperature (olive oil, avocados, nuts, fish); helps lower bad cholesterol (LDL) and raise good cholesterol (HDL).",
+        options: [
+          "Heart-healthy fats usually liquid at room temperature (e.g. olive oil, nuts, fish) that support cardiovascular health.",
+          "Solid fats derived from palm oil and commercial baked pastries.",
+          "Hardened arterial plaques that cause high blood pressure and coronary strokes.",
+          "Fats that have been chemically hydrogenated to resist spoiling at room temperature."
+        ],
+        correct: 0,
+        category: "Fats"
+      },
+      {
+        id: 13,
+        term: "Trans Fat (Hydrogenated Oil)",
+        def: "Artificially manufactured fats created by pumping hydrogen into liquid oils to make them solid and shelf-stable; severely increases heart disease risk.",
+        options: [
+          "Natural fats produced by cold-pressing fresh Mediterranean olives.",
+          "Artificially hydrogenated fats created to preserve packaged foods that significantly elevate heart disease risks.",
+          "Essential fatty acids that the body requires daily for proper brain and nerve function.",
+          "Water-soluble lipids found dissolved in fresh whole milk."
+        ],
+        correct: 1,
+        category: "Fats"
+      },
+      {
+        id: 14,
+        term: "Cholesterol (HDL vs. LDL)",
+        def: "A waxy, fat-like substance found in cells; HDL is 'good' (transports cholesterol to liver for removal), while LDL is 'bad' (builds plaque in arteries).",
+        options: [
+          "A waxy lipid substance; HDL is 'good' (removes plaque) while LDL is 'bad' (clogs arteries).",
+          "A digestive enzyme secreted by the gallbladder to break down dietary sugars.",
+          "A water-soluble vitamin that prevents scurvy and speeds up collagen repair.",
+          "A plant-based fiber that passes through the intestines completely unabsorbed."
+        ],
+        correct: 0,
+        category: "Fats"
+      },
+      {
+        id: 15,
+        term: "Water-Soluble Vitamins",
+        def: "Vitamins that dissolve in water (Vitamins C and all B-complex vitamins); cannot be stored in the body and must be consumed regularly, with excess excreted in urine.",
+        options: [
+          "Vitamins (like A, D, E, K) that accumulate and store inside body fat and liver tissue.",
+          "Vitamins (Vitamins C & B-complex) that dissolve in water, cannot be stored long-term, and must be replenished regularly.",
+          "Inorganic elemental minerals extracted from rock and soil by plant roots.",
+          "Digestive fluids produced by the pancreas to neutralize stomach acid."
+        ],
+        correct: 1,
+        category: "Vitamins"
+      },
+      {
+        id: 16,
+        term: "Fat-Soluble Vitamins",
+        def: "Vitamins that dissolve in and are absorbed with dietary fat (Vitamins A, D, E, and K); stored in body fat and the liver for future use.",
+        options: [
+          "Vitamins (A, D, E, and K) that are absorbed with fats and stored in body tissue and the liver.",
+          "Vitamins that wash out of the body through urination within hours of consumption.",
+          "Artificial coloring chemicals added to low-fat salad dressings.",
+          "Electrolytes that regulate electrical impulses across heart muscle cells."
+        ],
+        correct: 0,
+        category: "Vitamins"
+      },
+      {
+        id: 17,
+        term: "Minerals",
+        def: "Inorganic chemical elements found in soil and water that your body needs in small amounts (e.g., Calcium for bones, Iron for oxygen transport in blood).",
+        options: [
+          "Organic carbon compounds synthesized exclusively by green photosynthetic plants.",
+          "Inorganic elements from soil and water (such as Calcium and Iron) needed for body structure and function.",
+          "Calorie-dense macronutrients that provide 9 calories per individual gram.",
+          "Complex protein hormones that signal hunger and satiety to the hypothalamus."
+        ],
+        correct: 1,
+        category: "Minerals"
+      },
+      {
+        id: 18,
+        term: "Nutrient Density",
+        def: "A measure of the nutrients a food provides relative to the calories it supplies; nutrient-dense foods (like broccoli or salmon) pack high nutrition for few calories.",
+        options: [
+          "The exact physical thickness and heaviness of a serving of meat or cheese.",
+          "A measure comparing a food's valuable nutrients against its total calorie content.",
+          "The percentage of saturated fat contained in a fast-food hamburger.",
+          "The speed at which food is transported through the small intestine."
+        ],
+        correct: 1,
+        category: "Nutrition"
+      },
+      {
+        id: 19,
+        term: "MyPlate",
+        def: "The USDA food guidance system visual model that divides a plate into five food groups: Fruits, Vegetables, Grains, Protein, and Dairy.",
+        options: [
+          "The USDA visual food guide that illustrates healthy proportioning across 5 food groups: Fruits, Vegetables, Grains, Protein, and Dairy.",
+          "A medical calorie-counting app that tracks daily macronutrient ratios on smartphones.",
+          "A clinical weight-loss diet requiring participants to fast for 16 consecutive hours daily.",
+          "The federal regulation requiring all public school cafeterias to serve whole wheat bread."
+        ],
+        correct: 0,
+        category: "Nutrition"
+      },
+      {
+        id: 20,
+        term: "Dehydration",
+        def: "A dangerous condition that occurs when the body loses more fluids than are taken in, causing fatigue, dizziness, and organ strain.",
+        options: [
+          "A dangerous state where fluid loss exceeds fluid intake, impairing normal body functioning.",
+          "The accumulation of excess water weight around the ankles and lower extremities.",
+          "A medical condition where the kidneys fail to produce adequate amounts of concentrated urine.",
+          "The rapid conversion of dietary glucose into glycogen inside liver cells."
+        ],
+        correct: 0,
+        category: "Hydration"
+      }
+    ];
+
+    let currentCardIndex = 0;
+    let cardFlipped = false;
+    let userAnswers = {};
+
+    function renderQuiz() {
+      const container = document.getElementById("quiz-container");
+      container.innerHTML = "";
+
+      vocabData.forEach((q, idx) => {
+        const qCard = document.createElement("div");
+        qCard.className = "p-5 rounded-2xl bg-slate-900 border border-slate-800 space-y-3 transition";
+        qCard.id = `q-card-${idx}`;
+
+        let optsHtml = "";
+        q.options.forEach((opt, optIdx) => {
+          optsHtml += `
+            <button onclick="selectOption(${idx}, ${optIdx})" id="opt-${idx}-${optIdx}" class="w-full text-left p-3 rounded-xl border border-slate-800 bg-slate-950/70 hover:bg-slate-800/60 text-slate-300 text-xs transition flex items-start gap-3">
+              <span class="w-5 h-5 rounded-full border border-slate-700 bg-slate-900 text-slate-400 flex items-center justify-center text-[10px] font-bold shrink-0 mt-0.5">${String.fromCharCode(65 + optIdx)}</span>
+              <span class="leading-relaxed">${opt}</span>
+            </button>
+          `;
+        });
+
+        qCard.innerHTML = `
+          <div class="flex items-center justify-between gap-2">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">Question ${idx + 1} of 20 • ${q.category}</span>
+            <span id="feedback-badge-${idx}" class="text-[11px] font-bold hidden"></span>
+          </div>
+          <h4 class="text-sm font-bold text-white font-heading">Which definition accurately describes <span class="text-emerald-400 underline decoration-emerald-500/50">${q.term}</span>?</h4>
+          <div class="space-y-2 pt-1">
+            ${optsHtml}
+          </div>
+          <div id="explanation-${idx}" class="hidden p-3 rounded-xl bg-slate-950 border text-xs leading-relaxed mt-2"></div>
+        `;
+
+        container.appendChild(qCard);
+      });
+    }
+
+    function selectOption(qIdx, optIdx) {
+      if (userAnswers[qIdx] !== undefined) return; // already answered
+
+      userAnswers[qIdx] = optIdx;
+      const q = vocabData[qIdx];
+      const isCorrect = (optIdx === q.correct);
+
+      const qCard = document.getElementById(`q-card-${qIdx}`);
+      const chosenBtn = document.getElementById(`opt-${qIdx}-${optIdx}`);
+      const correctBtn = document.getElementById(`opt-${qIdx}-${q.correct}`);
+      const feedbackBadge = document.getElementById(`feedback-badge-${qIdx}`);
+      const explanation = document.getElementById(`explanation-${qIdx}`);
+
+      // highlight chosen
+      if (isCorrect) {
+        chosenBtn.className = "w-full text-left p-3 rounded-xl border border-emerald-500 bg-emerald-950/40 text-emerald-200 text-xs font-medium flex items-start gap-3";
+        feedbackBadge.className = "text-[11px] font-bold text-emerald-400 block";
+        feedbackBadge.innerText = "✓ Correct!";
+        qCard.classList.add("border-emerald-500/40");
+      } else {
+        chosenBtn.className = "w-full text-left p-3 rounded-xl border border-rose-500 bg-rose-950/40 text-rose-200 text-xs font-medium flex items-start gap-3";
+        correctBtn.className = "w-full text-left p-3 rounded-xl border border-emerald-500 bg-emerald-950/30 text-emerald-300 text-xs font-medium flex items-start gap-3";
+        feedbackBadge.className = "text-[11px] font-bold text-rose-400 block";
+        feedbackBadge.innerText = "✗ Incorrect";
+        qCard.classList.add("border-rose-500/40");
+      }
+
+      explanation.className = isCorrect ? "p-3 rounded-xl bg-emerald-950/20 border border-emerald-500/30 text-xs text-slate-300 block" : "p-3 rounded-xl bg-rose-950/20 border border-rose-500/30 text-xs text-slate-300 block";
+      explanation.innerHTML = `<strong class="text-white block mb-0.5 font-heading">Key Concept:</strong> ${q.def}`;
+
+      updateStats();
+    }
+
+    function updateStats() {
+      const answeredCount = Object.keys(userAnswers).length;
+      let score = 0;
+      Object.keys(userAnswers).forEach(qIdx => {
+        if (userAnswers[qIdx] === vocabData[qIdx].correct) {
+          score++;
+        }
+      });
+
+      document.getElementById("stat-answered").innerText = `${answeredCount} / 20`;
+      document.getElementById("stat-score").innerText = `${score}`;
+      const pct = answeredCount > 0 ? Math.round((score / answeredCount) * 100) : 0;
+      document.getElementById("stat-percent").innerText = `${pct}%`;
+    }
+
+    function resetQuiz() {
+      userAnswers = {};
+      renderQuiz();
+      updateStats();
+    }
+
+    function switchMode(mode) {
+      document.getElementById("view-quiz").classList.add("hidden");
+      document.getElementById("view-flashcards").classList.add("hidden");
+      document.getElementById("view-glossary").classList.add("hidden");
+
+      document.getElementById("tab-btn-quiz").className = "flex-1 py-2 text-xs font-bold rounded-xl transition text-slate-400 hover:text-white";
+      document.getElementById("tab-btn-flashcards").className = "flex-1 py-2 text-xs font-bold rounded-xl transition text-slate-400 hover:text-white";
+      document.getElementById("tab-btn-glossary").className = "flex-1 py-2 text-xs font-bold rounded-xl transition text-slate-400 hover:text-white";
+
+      if (mode === "quiz") {
+        document.getElementById("view-quiz").classList.remove("hidden");
+        document.getElementById("tab-btn-quiz").className = "flex-1 py-2 text-xs font-bold rounded-xl transition bg-emerald-500 text-slate-950 shadow-md";
+      } else if (mode === "flashcards") {
+        document.getElementById("view-flashcards").classList.remove("hidden");
+        document.getElementById("tab-btn-flashcards").className = "flex-1 py-2 text-xs font-bold rounded-xl transition bg-emerald-500 text-slate-950 shadow-md";
+        updateFlashcard();
+      } else if (mode === "glossary") {
+        document.getElementById("view-glossary").classList.remove("hidden");
+        document.getElementById("tab-btn-glossary").className = "flex-1 py-2 text-xs font-bold rounded-xl transition bg-emerald-500 text-slate-950 shadow-md";
+        renderGlossary();
+      }
+    }
+
+    function updateFlashcard() {
+      const q = vocabData[currentCardIndex];
+      cardFlipped = false;
+      document.getElementById("fc-badge").innerText = `Term (${currentCardIndex + 1} of 20)`;
+      document.getElementById("fc-text").className = "text-2xl font-black text-white font-heading leading-snug";
+      document.getElementById("fc-text").innerText = q.term;
+      document.getElementById("fc-counter").innerText = `${currentCardIndex + 1} / 20`;
+    }
+
+    function flipCard() {
+      const q = vocabData[currentCardIndex];
+      cardFlipped = !cardFlipped;
+      if (cardFlipped) {
+        document.getElementById("fc-badge").innerText = `Definition (${q.category})`;
+        document.getElementById("fc-text").className = "text-sm text-slate-200 leading-relaxed font-normal";
+        document.getElementById("fc-text").innerText = q.def;
+      } else {
+        document.getElementById("fc-badge").innerText = `Term (${currentCardIndex + 1} of 20)`;
+        document.getElementById("fc-text").className = "text-2xl font-black text-white font-heading leading-snug";
+        document.getElementById("fc-text").innerText = q.term;
+      }
+    }
+
+    function nextCard() {
+      currentCardIndex = (currentCardIndex + 1) % vocabData.length;
+      updateFlashcard();
+    }
+
+    function prevCard() {
+      currentCardIndex = (currentCardIndex - 1 + vocabData.length) % vocabData.length;
+      updateFlashcard();
+    }
+
+    function renderGlossary() {
+      const list = document.getElementById("glossary-list");
+      list.innerHTML = "";
+      vocabData.forEach(item => {
+        const div = document.createElement("div");
+        div.className = "p-4 rounded-xl bg-slate-900 border border-slate-800 space-y-1.5";
+        div.innerHTML = `
+          <div class="flex items-center justify-between">
+            <h4 class="font-bold text-white text-sm font-heading">${item.term}</h4>
+            <span class="text-[10px] text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">${item.category}</span>
+          </div>
+          <p class="text-slate-300 leading-relaxed text-xs">${item.def}</p>
+        `;
+        list.appendChild(div);
+      });
+    }
+
+    // Initialize
+    renderQuiz();
+  </script>
+
+</body>
+</html>
